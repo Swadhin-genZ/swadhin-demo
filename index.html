@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Padding vs Margin Demo</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <h1>feature one</h1>
-   <button>click me</button>>
+
+  <h1>Padding vs Margin (Live Example)</h1>
+
+  <div class="demo">
+    <h2>1) Padding Example</h2>
+    <p>
+      Padding is <b>inside</b> the element. It increases the space between the text and the border.
+    </p>
+
+    <div class="box padding-box">
+      I have <b>padding</b> (space inside)
+    </div>
+  </div>
+
+  <div class="demo">
+    <h2>2) Margin Example</h2>
+    <p>
+      Margin is <b>outside</b> the element. It increases the space between this box and other elements.
+    </p>
+
+    <div class="box margin-box">
+      I have <b>margin</b> (space outside)
+    </div>
+
+    <div class="box second-box">
+      I'm the next box (notice the gap)
+    </div>
+  </div>
+
+  <div class="demo">
+    <h2>3) Padding + Margin Together</h2>
+    <div class="box both-box">
+      I have <b>both</b> padding + margin
+    </div>
+  </div>
+
 </body>
 </html>

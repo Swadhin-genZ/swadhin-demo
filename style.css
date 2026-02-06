@@ -1,0 +1,42 @@
+body{
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1{
+  text-align: center;
+}
+
+/* A common box style */
+.box{
+  border: 3px solid black;
+  background: #e6f0ff;
+}
+
+/* 1) Padding demo */
+.padding-box{
+  padding: 25px;   /* inside space */
+}
+
+/* 2) Margin demo */
+.margin-box{
+  margin-bottom: 30px;  /* outside space (gap under this box) */
+}
+
+/* This is just another box below */
+.second-box{
+  padding: 10px;
+}
+
+/* 3) Both padding + margin */
+.both-box{
+  padding: 25px;
+  margin-top: 25px;
+}
+
+/* Make sections clearer */
+.demo{
+  margin-top: 30px;
+  padding: 15px;
+  border: 1px dashed #999;
+}
