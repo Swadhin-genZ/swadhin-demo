@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lamp Switch Login</title>
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top left, #0f1b2a, #05070b);
+      color: white;
+      overflow: hidden;
+      transition: 0.5s ease;
+    }
+
+    .container{
+      width: 90%;
+      max-width: 1000px;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      padding: 30px;
+    }
+
+    /* LEFT SIDE */
+    .left{
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .lamp-wrap{
+      position: relative;
+      width: 320px;
+    }
+
+    /* LIGHT CONE */
+    .light-cone{
+      position: absolute;
+      top: 50px;
+      left: 55px;
+      width: 200px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(57,255,136,0.25), rgba(0,0,0,0));
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      filter: blur(2px);
+      opacity: 1;
+      transition: 0.5s ease;
+      pointer-events: none;
+    }
+
+    .lamp-img{
+      width: 100%;
+      filter: drop-shadow(0px 0px 40px rgba(0,255,0,0.25));
+      user-select: none;
+      pointer-events: none;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* ROPE SWITCH (REALISTIC) */
+    .rope{
+      position: absolute;
+      right: 130px;
+      top: 100px;
+      width: 40px;
+      height: 260px;
+      cursor: pointer;
+      z-index: 10;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      transform-origin: top center;
+    }
+
+    .rope-line{
+      width: 3px;
+      height: 170px;
+      background: rgba(255,255,255,0.75);
+      border-radius: 10px;
+      transform-origin: top center;
+      transition: height 0.25s ease;
+    }
+
+    .rope-knob{
+      width: 22px;
+      height: 22px;
+      background: #39ff88;
+      border-radius: 50%;
+      margin-top: -5px;
+      box-shadow: 0 0 18px rgba(0,255,120,0.5);
+      transition: transform 0.25s ease;
+    }
+
+    /* Pull stretch */
+    .rope.pull .rope-line{
+      height: 210px;
+    }
+
+    .rope.pull .rope-knob{
+      transform: translateY(35px);
+    }
+
+    /* Swing like pendulum */
+    .rope.swing{
+      animation: pendulum 1.2s ease-in-out;
+    }
+
+    @keyframes pendulum{
+      0%   { transform: rotate(0deg); }
+      20%  { transform: rotate(-14deg); }
+      40%  { transform: rotate(14deg); }
+      60%  { transform: rotate(-9deg); }
+      80%  { transform: rotate(6deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* RIGHT LOGIN BOX */
+    .login-box{
+      flex: 1;
+      max-width: 420px;
+      background: rgba(10, 15, 20, 0.7);
+      border-radius: 18px;
+      padding: 45px 35px;
+      position: relative;
+
+      border: 2px solid rgba(0, 255, 120, 0.35);
+      box-shadow:
+        0 0 20px rgba(0, 255, 120, 0.25),
+        0 0 45px rgba(0, 255, 120, 0.15);
+      backdrop-filter: blur(10px);
+
+      transition: 0.6s ease;
+    }
+
+    .login-box h1{
+      font-size: 34px;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    label{
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      opacity: 0.8;
+    }
+
+    .input{
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      outline: none;
+      background: rgba(255,255,255,0.06);
+      color: white;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .input::placeholder{
+      color: rgba(255,255,255,0.4);
+    }
+
+    .input:focus{
+      border: 1px solid rgba(0, 255, 120, 0.6);
+      box-shadow: 0 0 15px rgba(0,255,120,0.15);
+    }
+
+    .btn{
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #2f8f3a;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 5px;
+      transition: 0.2s;
+      box-shadow: 0 8px 20px rgba(0, 255, 120, 0.15);
+    }
+
+    .btn:hover{
+      background: #35a043;
+      transform: translateY(-2px);
+    }
+
+    .forgot{
+      text-align: center;
+      margin-top: 18px;
+      font-size: 14px;
+      opacity: 0.7;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .forgot:hover{
+      opacity: 1;
+      color: #39ff88;
+    }
+
+    /* FORM OFF EFFECT */
+    .hidden-form{
+      opacity: 0;
+      transform: translateX(50px) scale(0.95);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    /* LIGHT OFF EFFECT */
+    .lights-off{
+      background: radial-gradient(circle at top left, #020202, #000000);
+    }
+
+    .light-off{
+      opacity: 0;
+      transform: scale(0.85);
+    }
+
+    /* Responsive */
+    @media(max-width: 850px){
+      .container{
+        flex-direction: column;
+        height: auto;
+      }
+      .lamp-wrap{
+        width: 260px;
+      }
+      .login-box{
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- LEFT -->
+    <div class="left">
+      <div class="lamp-wrap">
+
+        <!-- Light cone -->
+        <div class="light-cone" id="lightCone"></div>
+
+        <!-- Lamp image -->
+        <img class="lamp-img" src="lamp.png" alt="Lamp">
+
+        <!-- Rope -->
+        <div class="rope" id="ropeSwitch" title="Pull the rope">
+          <div class="rope-line"></div>
+          <div class="rope-knob"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="login-box" id="loginBox">
+      <h1>Welcome Back</h1>
+
+      <label>Username</label>
+      <input class="input" type="text" placeholder="Enter your username">
+
+      <label>Password</label>
+      <input class="input" type="password" placeholder="Enter your password">
+
+      <button class="btn">Login</button>
+
+      <div class="forgot">Forgot Password?</div>
+    </div>
+
+  </div>
+
+  <script>
+    const ropeSwitch = document.getElementById("ropeSwitch");
+    const loginBox = document.getElementById("loginBox");
+    const lightCone = document.getElementById("lightCone");
+
+    let isLightOn = true;
+
+    ropeSwitch.addEventListener("click", () => {
+
+      // Stretch rope
+      ropeSwitch.classList.remove("pull");
+      void ropeSwitch.offsetWidth;
+      ropeSwitch.classList.add("pull");
+
+      // Return stretch
+      setTimeout(() => {
+        ropeSwitch.classList.remove("pull");
+      }, 250);
+
+      // Swing rope
+      ropeSwitch.classList.remove("swing");
+      void ropeSwitch.offsetWidth;
+      ropeSwitch.classList.add("swing");
+
+      // Toggle light
+      isLightOn = !isLightOn;
+
+      if (!isLightOn) {
+        loginBox.classList.add("hidden-form");
+        document.body.classList.add("lights-off");
+        lightCone.classList.add("light-off");
+      } else {
+        loginBox.classList.remove("hidden-form");
+        document.body.classList.remove("lights-off");
+        lightCone.classList.remove("light-off");
+      }
+    });
+  </script>
+
+</body>
+</html>
